@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Exam Page</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            padding: 20px;
+        }
+
+        #timer {
+            float: right;
+        }
+
+        .question-container {
+            margin-top: 20px;
+        }
+
+        .btn-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .question {
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .question.current {
+            display: block;
+        }
+
+        .btn-container button {
+            margin-left: 10px;
+        }
+
+        #currentQuestion {
+            margin-right: 10px;
+        }
+
+        .question-navigation {
+            display: flex;
+            align-items: center;
+        }
+
+        .btn-container button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="mb-4">Exam Page</h1>
+        <div id="timer">Time left: <span id="countdown">20:00</span></div>
+
+        <div class="question-container">
+            <!-- Question 1 -->
+            <div class="question current" id="question1">
+                <h3>Question 1</h3>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option1"> Option A
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option2"> Option B
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option3"> Option C
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option4"> Option D
+                </label>
+            </div>
+             <div class="question current" id="question1">
+                <h3>Question 1</h3>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option1"> Option A
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option2"> Option B
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option3"> Option C
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" name="question1" value="option4"> Option D
+                </label>
+            </div>
+
+            <!-- Continue this pattern for questions 2 to 20 -->
+
+        </div>
+
+        <div class="btn-container mt-4">
+            <div class="question-navigation">
+                <button class="btn btn-primary" onclick="prevQuestion()" id="prevButton" disabled>Previous</button>
+                <span id="currentQuestion">Question 1</span>
+                <button class="btn btn-primary" onclick="nextQuestion()">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        var timeLimit = 20 * 60; // 20 minutes in seconds
+        var countdown = document.getElementById('countdown');
+        var currentQuestion = 1;
+
+        function updateTimer() {
+            var minutes = Math.floor(timeLimit / 60);
+            var seconds = timeLimit % 60;
+
+            countdown.textContent = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+
+            if (timeLimit <= 0) {
+                alert('Time is up!');
+                window.location.reload();
+            } else {
+                timeLimit--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        function nextQuestion() {
+            var current = document.getElementById('question' + currentQuestion);
+            current.classList.remove('current');
+            currentQuestion++;
+            var next = document.getElementById('question' + currentQuestion);
+            next.classList.add('current');
+            updateCurrentQuestionLabel();
+            updatePrevButtonState();
+        }
+
+        function prevQuestion() {
+            var current = document.getElementById('question' + currentQuestion);
+            current.classList.remove('current');
+            currentQuestion--;
+            var prev = document.getElementById('question' + currentQuestion);
+            prev.classList.add('current');
+            updateCurrentQuestionLabel();
+            updatePrevButtonState();
+        }
+
+        function updateCurrentQuestionLabel() {
+            document.getElementById('currentQuestion').textContent = 'Question ' + currentQuestion;
+        }
+
+        function updatePrevButtonState() {
+            var prevButton = document.getElementById('prevButton');
+            prevButton.disabled = currentQuestion === 1;
+        }
+
+        updateTimer();
+        updatePrevButtonState();
+    </script>
+
+</body>
+
+</html>

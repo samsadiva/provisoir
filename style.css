@@ -1,0 +1,16 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 800px;
+}
+
+#question-container {
+    margin-bottom: 20px;
+}
+
+#result-container {
+    display: none;
+    font-weight: bold;
+}

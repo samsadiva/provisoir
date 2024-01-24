@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Countdown Timer</title>
+</head>
+
+<body>
+
+    <div>
+        <h1>Countdown Timer</h1>
+        <p id="countdown">20:00</p>
+    </div>
+
+    <script>
+        var timeLimit = 20 * 60; // 20 minutes in seconds
+        var countdownElement = document.getElementById('countdown');
+
+        function updateTimer() {
+            var minutes = Math.floor(timeLimit / 60);
+            var seconds = timeLimit % 60;
+
+            var formattedMinutes = minutes < 10 ? '0' + minutes : minutes;
+            var formattedSeconds = seconds < 10 ? '0' + seconds : seconds;
+
+            countdownElement.textContent = formattedMinutes + ':' + formattedSeconds;
+
+            if (timeLimit <= 0) {
+                alert('Time is up!');
+                // You can add additional logic here when the time is up
+            } else {
+                timeLimit--;
+                setTimeout(updateTimer, 1000);
+            }
+        }
+
+        updateTimer();
+    </script>
+
+</body>
+
+</html>
